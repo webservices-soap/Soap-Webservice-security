@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://online.order.in/services/types" xmlns:qpot="http://online.order.in/services/types"
+	elementFormDefault="qualified">
+	<!-- Registration Request -->
+	<xsd:element name="Order">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="name" type="xsd:string" />
+				<xsd:element name="gender" type="xsd:string" />
+				<xsd:element name="mobile" type="xsd:string" />
+				<xsd:element name="email" type="xsd:string" />
+				<xsd:element ref="qpot:Product" minOccurs="1" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Product">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="productName" type="xsd:string" />
+				<xsd:element name="quantity" type="xsd:int" />
+				<xsd:element name="productType" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Registration Response -->
+	<xsd:element name="Recipt">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="productID" type="xsd:string" />
+				<xsd:element name="price" type="xsd:int" />
+				<xsd:element name="purchaseDate" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- Fault Type -->
+
+	<xsd:element name="BusinessFaultType">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="errorCode" type="xsd:int" />
+				<xsd:element name="errorMessage" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

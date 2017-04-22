@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	targetNamespace="http://online.order.in/services/service" xmlns:qpos="http://online.order.in/services/service"
+	xmlns:qpot="http://online.order.in/services/types" name="OrderService">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://online.order.in/services/service">
+			<xsd:import namespace="http://online.order.in/services/types"
+				schemaLocation="../xsd/order.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="OnlineOrderService_orderNow">
+		<wsdl:part element="qpot:Order" name="orderRequest" />
+	</wsdl:message>
+	<wsdl:message name="OnlineOrderService_orderNowRespone">
+		<wsdl:part element="qpot:Recipt" name="recipt" />
+	</wsdl:message>
+
+	<wsdl:message name="BusinessException">
+		<wsdl:part element="qpot:BusinessFaultType" name="faultType" />
+	</wsdl:message>
+	<wsdl:portType name="OnlineOrderService">
+		<wsdl:operation name="orderNow">
+			<wsdl:input message="qpos:OnlineOrderService_orderNow" />
+			<wsdl:output message="qpos:OnlineOrderService_orderNowRespone" />
+			<wsdl:fault name="businessException" message="qpos:BusinessException" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OrderServiceSOAPBinding" type="qpos:OnlineOrderService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="orderNow">
+			<soap:operation soapAction="" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OrderService">
+		<wsdl:port binding="qpos:OrderServiceSOAPBinding" name="OrderServiceSOAPPort">
+			<soap:address location="http://localhost:8080/OrderServices/service/order" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

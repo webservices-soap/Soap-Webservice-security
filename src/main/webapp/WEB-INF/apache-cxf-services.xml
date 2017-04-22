@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<jaxws:endpoint name="onlineOrderService"
+		implementor="com.dugu.dev.ws.security.service.OnlineOrderServiceImpl"
+		address="/order">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+				<constructor-arg>
+					<map>
+						<entry key="action" value="UsernameToken" /> <!-- UsernameToken Timestamp -->
+						<entry key="passwordType" value="PasswordText" /> <!-- PasswordDigest -->
+						<entry key="passwordCallbackRef" value-ref="passwordCallback" />
+					</map>
+				</constructor-arg>
+			</bean>
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+	<bean id="passwordCallback"
+		class="com.dugu.dev.ws.security.handler.AuthenticationCallbackHandler" />
+</beans>
